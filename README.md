@@ -1,7 +1,7 @@
 # @sanity/embeddings-index-ui
 > This package contains plugins for **Sanity Studio v3**.
 
-`@sanity/embeddings-index-ui` Sanity Studio plugins that interacts with the `/embeddings-index` HTTP API.
+Sanity Studio plugins that interacts with the `/embeddings-index` HTTP API.
 
 The embeddings index API allows the creation of named embeddings vector indexes.
 An embeddings index contains embeddings for all Sanity documents matching a configured GROQ filter in a dataset.
