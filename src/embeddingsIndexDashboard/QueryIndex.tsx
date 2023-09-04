@@ -92,10 +92,11 @@ export function ResultList(props: {results: QueryResult[]; query: string}) {
 }
 
 function ResultEntry(props: {result: QueryResult}) {
+  const value = props.result.value
   return (
     <Flex gap={4} align="center">
       <Box flex={1}>
-        <DocumentPreview documentId={props.result.value.documentId} button />
+        <DocumentPreview documentId={value.documentId} schemaTypeName={value.type} button />
       </Box>
       <Box>
         <Text muted size={1}>

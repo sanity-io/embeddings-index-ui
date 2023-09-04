@@ -19,7 +19,7 @@ export interface QueryResult {
   score: number
   value: {
     documentId: string
-    type?: string
+    type: string
   }
 }
 

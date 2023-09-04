@@ -1,4 +1,4 @@
-import {CSSProperties, useEffect, useMemo, useState} from 'react'
+import {CSSProperties, useMemo} from 'react'
 import {useMemoObservable} from 'react-rx'
 import {
   DefaultPreview,
@@ -7,7 +7,6 @@ import {
   SanityDefaultPreview,
   SanityDocument,
   SchemaType,
-  useClient,
   useDocumentPreviewStore,
   useSchema,
 } from 'sanity'
@@ -17,6 +16,7 @@ import {ErrorOutlineIcon} from '@sanity/icons'
 
 interface ResultPreviewProps {
   documentId: string
+  schemaTypeName: string
   button?: boolean
   style?: CSSProperties
 }
@@ -24,18 +24,13 @@ interface ResultPreviewProps {
 export function DocumentPreview({
   documentId,
   style,
+  schemaTypeName,
   ...buttonProps
 }: ResultPreviewProps & ButtonProps) {
-  const client = useClient({apiVersion: '2023-06-06'})
-  const [type, setType] = useState<string | undefined>(undefined)
   const schema = useSchema()
-  const schemaType = type ? schema.get(type) : undefined
+  const schemaType = schemaTypeName ? schema.get(schemaTypeName) : undefined
 
-  useEffect(() => {
-    client.fetch<string>(`* [_id==$id]._type`, {id: documentId}).then(setType)
-  }, [documentId, client])
-
-  if (!type) {
+  if (!schemaTypeName) {
     return (
       <Card style={{minHeight: '36px'}}>
         <DefaultPreview
@@ -58,7 +53,7 @@ export function DocumentPreview({
           media={() => <ErrorOutlineIcon />}
           title={
             <>
-              Unknown type <code>{type ?? 'N/A'}</code> for {documentId}
+              Unknown type <code>{schemaTypeName ?? 'N/A'}</code> for {documentId}
             </>
           }
         />
@@ -69,6 +64,7 @@ export function DocumentPreview({
   return (
     <DocumentPreviewInner
       documentId={documentId}
+      schemaTypeName={schemaTypeName}
       schemaType={schemaType}
       style={style}
       {...buttonProps}

@@ -116,7 +116,7 @@ function SemanticSearchInput(props: ObjectInputProps) {
 
       queryIndex(
         {
-          query: queryString,
+          query: queryString.trim().length ? queryString : JSON.stringify(docRef.current) ?? '',
           indexName,
           maxResults,
           filter: {
@@ -194,7 +194,7 @@ function SemanticSearchInput(props: ObjectInputProps) {
       id={id}
       ref={autocompleteRef}
       data-testid="semantic-autocomplete"
-      placeholder="Type to search"
+      placeholder="Type to search..."
       openButton={openButtonConfig}
       onFocus={handleFocus}
       onChange={handleChange}
@@ -210,11 +210,12 @@ function SemanticSearchInput(props: ObjectInputProps) {
 }
 
 function AutocompleteOption(props: Option) {
+  const value = props.result.value
   return (
     <Button mode="bleed" padding={1} style={{width: '100%'}}>
       <Flex gap={2} align="center">
         <Box flex={1}>
-          <DocumentPreview documentId={props.result.value.documentId} />
+          <DocumentPreview documentId={value.documentId} schemaTypeName={value.type} />
         </Box>
         <Box padding={2}>
           <Text size={1} muted title={'Relevance'}>
