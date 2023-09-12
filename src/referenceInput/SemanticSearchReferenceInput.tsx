@@ -1,12 +1,4 @@
-import {
-  ObjectInputProps,
-  ReferenceSchemaType,
-  set,
-  setIfMissing,
-  typed,
-  unset,
-  useClient,
-} from 'sanity'
+import {ObjectInputProps, ReferenceSchemaType, set, setIfMissing, typed, unset} from 'sanity'
 import {Autocomplete, Box, Button, Flex, Text, AutocompleteOpenButtonProps} from '@sanity/ui'
 import {EarthGlobeIcon, LinkIcon} from '@sanity/icons'
 import {useCallback, useEffect, useId, useMemo, useRef, useState} from 'react'
@@ -14,6 +6,7 @@ import {DocumentPreview} from '../preview/DocumentPreview'
 import {useDocumentPane} from 'sanity/desk'
 import {queryIndex, QueryResult} from '../api/embeddingsApi'
 import {publicId} from '../utils/id'
+import {useApiClient} from '../api/embeddingsApiHooks'
 
 interface Option {
   result: QueryResult
@@ -58,11 +51,6 @@ function useDebouncedValue<T>(value: T, ms: number) {
   }, [value, ms])
 
   return debouncedValue
-}
-
-function useApiClient() {
-  const client = useClient({apiVersion: 'vX'})
-  return useMemo(() => client, [client])
 }
 
 function SemanticSearchInput(props: ObjectInputProps) {

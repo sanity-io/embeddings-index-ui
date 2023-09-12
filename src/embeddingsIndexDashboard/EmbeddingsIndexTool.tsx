@@ -1,16 +1,11 @@
 import {Box, Button, Card, Flex, Heading, Spinner, Stack} from '@sanity/ui'
-import {useClient} from 'sanity'
-import {useCallback, useEffect, useMemo, useState} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import {AddIcon, UndoIcon} from '@sanity/icons'
 import {deleteIndex, getIndexes, IndexState, NamedIndex} from '../api/embeddingsApi'
 import {EditIndexDialog} from './IndexEditor'
 import {IndexList} from './IndexList'
 import {IndexInfo} from './IndexInfo'
-
-function useApiClient() {
-  const client = useClient({apiVersion: 'vX'})
-  return useMemo(() => client, [client])
-}
+import {useApiClient} from '../api/embeddingsApiHooks'
 
 export function EmbeddingsIndexTool() {
   return (
