@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2](https://github.com/sanity-io/embeddings-index-ui/compare/v1.0.1...v1.0.2) (2023-09-12)
+
+### Bug Fixes
+
+- custom url host via localstorage ([7ca0a13](https://github.com/sanity-io/embeddings-index-ui/commit/7ca0a132007dab02f1b0c682a6f309f4cf6fe460))
+
 ## [1.0.1](https://github.com/sanity-io/embeddings-index-ui/compare/v1.0.0...v1.0.1) (2023-09-04)
 
 ### Bug Fixes
