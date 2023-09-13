@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/sanity-io/embeddings-index-ui/compare/v1.0.2...v1.0.3) (2023-09-13)
+
+### Bug Fixes
+
+- show notice when project feature is missing ([ff3d6dc](https://github.com/sanity-io/embeddings-index-ui/commit/ff3d6dc79c3944c9a6e938ae6a3059d108d2722b))
+
 ## [1.0.2](https://github.com/sanity-io/embeddings-index-ui/compare/v1.0.1...v1.0.2) (2023-09-12)
 
 ### Bug Fixes
