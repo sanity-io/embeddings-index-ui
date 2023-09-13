@@ -6,13 +6,23 @@ import {EditIndexDialog} from './IndexEditor'
 import {IndexList} from './IndexList'
 import {IndexInfo} from './IndexInfo'
 import {useApiClient} from '../api/embeddingsApiHooks'
+import {FeatureDisabledNotice, useIsFeatureEnabled} from '../api/isEnabled'
 
 export function EmbeddingsIndexTool() {
+  const featureState = useIsFeatureEnabled()
   return (
     <Card>
       <Flex justify="center" flex={1}>
         <Card flex={1} style={{maxWidth: 1200}} padding={5}>
-          <Indexes />
+          {featureState == 'loading' ? (
+            <Box padding={2}>
+              <Spinner />
+            </Box>
+          ) : null}
+
+          {featureState == 'disabled' ? <FeatureDisabledNotice /> : null}
+
+          {featureState == 'enabled' ? <Indexes /> : null}
         </Card>
       </Flex>
     </Card>

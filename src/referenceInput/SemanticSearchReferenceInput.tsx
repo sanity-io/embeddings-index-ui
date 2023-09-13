@@ -1,5 +1,13 @@
 import {ObjectInputProps, ReferenceSchemaType, set, setIfMissing, typed, unset} from 'sanity'
-import {Autocomplete, Box, Button, Flex, Text, AutocompleteOpenButtonProps} from '@sanity/ui'
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Flex,
+  Text,
+  AutocompleteOpenButtonProps,
+  Spinner,
+} from '@sanity/ui'
 import {EarthGlobeIcon, LinkIcon} from '@sanity/icons'
 import {useCallback, useEffect, useId, useMemo, useRef, useState} from 'react'
 import {DocumentPreview} from '../preview/DocumentPreview'
@@ -7,6 +15,7 @@ import {useDocumentPane} from 'sanity/desk'
 import {queryIndex, QueryResult} from '../api/embeddingsApi'
 import {publicId} from '../utils/id'
 import {useApiClient} from '../api/embeddingsApiHooks'
+import {FeatureDisabledNotice, useIsFeatureEnabledContext} from '../api/isEnabled'
 
 interface Option {
   result: QueryResult
@@ -20,13 +29,27 @@ export function SemanticSearchReferenceInput(props: ObjectInputProps) {
   const defaultEnabled =
     (props.schemaType as ReferenceSchemaType)?.options?.embeddingsIndex?.searchMode === 'embeddings'
 
+  const featureState = useIsFeatureEnabledContext()
+
   const [semantic, setSemantic] = useState<boolean>(defaultEnabled)
   const toggleSemantic = useCallback(() => setSemantic((current) => !current), [])
 
   return (
     <Flex gap={2} flex={1} style={{width: '100%'}}>
+      {semantic && featureState == 'loading' ? (
+        <Box padding={2}>
+          <Spinner />
+        </Box>
+      ) : null}
+
+      {semantic && featureState == 'disabled' ? <FeatureDisabledNotice /> : null}
+
       <Box flex={1} style={{maxHeight: 36, overflow: 'hidden'}}>
-        {semantic ? <SemanticSearchInput {...props} /> : props.renderDefault(props)}
+        {semantic && featureState == 'enabled' ? (
+          <SemanticSearchInput {...props} />
+        ) : (
+          props.renderDefault(props)
+        )}
       </Box>
       <Button
         icon={semantic ? EarthGlobeIcon : LinkIcon}
