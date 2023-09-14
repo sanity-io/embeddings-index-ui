@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.0...v1.1.1) (2023-09-14)
+
+### Bug Fixes
+
+- navigate to document when selecting it in index tool search ([f7f6d26](https://github.com/sanity-io/embeddings-index-ui/commit/f7f6d26e1a5c3ae2d8a0adfaed2e30c4faf71ba0))
+
 ## [1.1.0](https://github.com/sanity-io/embeddings-index-ui/compare/v1.0.3...v1.1.0) (2023-09-14)
 
 ### Features
