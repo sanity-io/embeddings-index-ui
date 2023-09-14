@@ -4,7 +4,7 @@
 
 Sanity Studio v3 plugins that interact with the `/embeddings-index` HTTP API.
 
-The Embeddings Index API enables creating named embeddings vector indexes.
+The Embeddings Index API enables the creation, management, and search of named embeddings vector indexes.
 
 An embeddings index contains embeddings for all Sanity documents matching a configured [GROQ filter](https://www.sanity.io/docs/how-queries-work) in a dataset.
 A [GROQ projection](https://www.sanity.io/docs/query-cheat-sheet) is applied to matching documents before vectorization.
@@ -31,16 +31,15 @@ npm install @sanity/embeddings-index-ui
 
 For more information about using the plugins, see the relevant sections below.
 
-## Embeddings index reference input
+## Semantic reference search input
 
 <img width="619" alt="image" src="https://github.com/sanity-io/sanity/assets/835514/55d372fe-c5fe-40dd-882b-10c6e8794442">
 
-The `embeddingsIndexReferenceInput` plugin allows reference fields to opt in to embeddings index search.
-This enables users to search for references using natural language, and to retrieve documents based on semantic meaning, rather than exact word matches.
+The Embeddings Index UI ships with a Semantic reference search input component. This enables you to search for [references](https://www.sanity.io/docs/connected-content) using natural language and to retrieve documents based on semantic meaning rather than exact string matches.
 
 ### Usage
 
-Add `embeddingsIndexReferenceInput` as a plugin to `sanity.config.ts` (or `.js`):
+You can add the semantic reference search input by importing and adding `embeddingsIndexReferenceInput` as a plugin to `sanity.config.ts` (or `.js`):
 
 ```ts
 import {defineConfig} from 'sanity'
@@ -63,7 +62,7 @@ defineField({
   options: {
     embeddingsIndex: {
       indexName: 'my-index', // Name of the embeddings index
-      maxResults: 10, // Max. number of returned results per request. Default: 10
+      maxResults: 10, // Maximum number of returned results per request. Default: 10
       searchMode: 'embeddings' // Sets default search mode for the field. Enables toggling between 'embeddings' (semantic search) and 'default' (default search based on GROQ filter)
     }
   }
@@ -112,10 +111,10 @@ defineField({
 })
 ```
 
-## Embeddings index dashboard
+## Embeddings Index API dashboard for Sanity Studio
 
-A UI alternative to the [Embeddings ˆndex CLI](https://github.com/sanity-io/embeddings-index-cli) to
-manage embeddings indexes in a Studio dashboard.
+A UI alternative to the [Embeddings Index CLI](https://github.com/sanity-io/embeddings-index-cli) to
+manage embeddings indexes in a Studio dashboard. It also lets you test semantic search on the indexes.
 
 <img width="1227" alt="image" src="https://github.com/sanity-io/sanity/assets/835514/279b03b8-d2c0-4cc1-bbe6-9d335937f25a">
 
@@ -137,7 +136,7 @@ export default defineConfig({
 })
 ```
 
-This adds the Embeddings Index tool to the studio navigation bar, but only when the studio is running in developer mode (`localhost`).
+This adds the Embeddings Index API tool to the studio navigation bar, but only when the studio is running in developer mode (`localhost`).
 
 If you want to enable the tool based on user access roles:
 
