@@ -1,8 +1,8 @@
 # Sanity Embeddings Index UI
 
-> This package contains plugins for **Sanity Studio v3**.
+> Using this feature requires Sanity to send data to OpenAI[.]com, and Pinecone[.]io for storing vector interpretations of documents.
 
-Sanity Studio plugins that interact with the `/embeddings-index` HTTP API.
+Sanity Studio v3 plugins that interact with the `/embeddings-index` HTTP API.
 
 The Embeddings Index API enables creating named embeddings vector indexes.
 
