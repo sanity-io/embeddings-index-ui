@@ -15,6 +15,8 @@ Creating an index can take time, depending on the number of existing documents a
 
 For a CLI alternative, check out the [Embeddings Index CLI](https://github.com/sanity-io/embeddings-index-cli) package.
 
+> Using this feature requires Sanity to send data to OpenAI.com, and Pinecone.io for storing vector interpretations of documents.
+
 ## Installation
 
 ```sh
