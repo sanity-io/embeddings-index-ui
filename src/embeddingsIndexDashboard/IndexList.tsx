@@ -14,7 +14,7 @@ export function IndexList(props: IndexListProps) {
   return (
     <Card tone="default" style={{opacity: loading ? 0.5 : 1}}>
       <Stack space={2}>
-        <Card borderBottom flex={1} paddingBottom={2}>
+        <Card borderBottom flex={1} paddingBottom={2} padding={3}>
           <Flex>
             <Box flex={1}>
               <Label muted>Index name</Label>
@@ -59,12 +59,15 @@ function IndexRow(props: {
   return (
     <Button
       tone={selectedIndex?.indexName === index.indexName ? 'primary' : 'default'}
-      mode={selectedIndex?.indexName === index.indexName ? 'default' : 'bleed'}
+      mode={selectedIndex?.indexName === index.indexName ? 'default' : 'ghost'}
       onClick={onSelect}
       key={index.indexName}
+      padding={3}
     >
       <Flex>
-        <Box flex={1}>{index.indexName}</Box>
+        <Box flex={1}>
+          <strong>{index.indexName}</strong>
+        </Box>
         <Box flex={1}>{index.dataset}</Box>
         <Box flex={1}>{index.status}</Box>
         <Box flex={1}>
