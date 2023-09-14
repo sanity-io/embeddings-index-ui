@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.2](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.1...v1.1.2) (2023-09-14)
+
+### Bug Fixes
+
+- **docs:** added note about Sanity using openai and pinecone for this feature ([6c71a64](https://github.com/sanity-io/embeddings-index-ui/commit/6c71a64e6ce0ed2ccbfd77750ce4af4182b04a0a))
+
 ## [1.1.1](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.0...v1.1.1) (2023-09-14)
 
 ### Bug Fixes
