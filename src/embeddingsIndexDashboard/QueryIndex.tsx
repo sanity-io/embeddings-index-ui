@@ -1,6 +1,8 @@
 import {useCallback, useMemo} from 'react'
 import {SemanticSearchAutocomplete} from '../referenceInput/SemanticSearchAutocomplete'
 import {EmbeddingsIndexConfig} from '../schemas/typeDefExtensions'
+import {useRouter} from 'sanity/router'
+import {QueryResult} from '../api/embeddingsApi'
 
 export function QueryIndex(props: {indexName: string}) {
   const {indexName} = props
@@ -9,5 +11,21 @@ export function QueryIndex(props: {indexName: string}) {
     () => ({indexName, maxResults: 8}),
     [indexName],
   )
-  return <SemanticSearchAutocomplete getEmptySearchValue={getEmpty} indexConfig={indexConfig} />
+
+  const {resolveIntentLink, navigateUrl} = useRouter()
+  const onSelect = useCallback(
+    (hit: QueryResult) => {
+      navigateUrl({
+        path: resolveIntentLink('edit', {id: hit.value.documentId, type: hit.value.type}),
+      })
+    },
+    [resolveIntentLink, navigateUrl],
+  )
+  return (
+    <SemanticSearchAutocomplete
+      getEmptySearchValue={getEmpty}
+      indexConfig={indexConfig}
+      onSelect={onSelect}
+    />
+  )
 }

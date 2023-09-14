@@ -21,7 +21,7 @@ export interface SemanticSearchAutocompleteProps {
   getEmptySearchValue: () => string
   typeFilter?: string[]
   filterResult?: (hit: QueryResult) => boolean
-  onChange?: (value: string) => void
+  onSelect?: (value: QueryResult) => void
   onFocus?: FocusEventHandler<HTMLInputElement>
   onBlur?: FocusEventHandler<HTMLInputElement>
   readOnly?: boolean
@@ -52,7 +52,7 @@ export const SemanticSearchAutocomplete = forwardRef(function SemanticSearchAuto
     readOnly,
     onFocus,
     onBlur,
-    onChange,
+    onSelect,
     typeFilter,
   } = props
   const id = useId()
@@ -138,9 +138,14 @@ export const SemanticSearchAutocomplete = forwardRef(function SemanticSearchAuto
         setOptions(NO_OPTIONS)
         return
       }
-      onChange?.(value)
+      const option = (options as Option[])
+        .filter((r): r is Option => 'result' in r)
+        .find((r) => r.result.value.documentId === value)
+      if (option && onSelect) {
+        onSelect(option.result)
+      }
     },
-    [onChange],
+    [onSelect, options],
   )
 
   return (

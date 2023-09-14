@@ -112,17 +112,16 @@ function SemanticSearchInput(props: ObjectInputProps & {indexConfig: EmbeddingsI
   const handleBlur = useCallback(() => onPathFocus([]), [onPathFocus])
 
   const handleChange = useCallback(
-    (nextId: string) => {
-      if (!nextId) {
+    (result: QueryResult) => {
+      if (!result) {
         onChange(unset())
         onPathFocus([])
         return
       }
-
       const patches = [
         setIfMissing({}),
         set(schemaType.name, ['_type']),
-        set(publicId(nextId), ['_ref']),
+        set(publicId(result.value.documentId), ['_ref']),
         unset(['_weak']),
         unset(['_strengthenOnPublish']),
       ]
@@ -150,7 +149,7 @@ function SemanticSearchInput(props: ObjectInputProps & {indexConfig: EmbeddingsI
       ref={autocompleteRef}
       typeFilter={typeFilter}
       indexConfig={indexConfig}
-      onChange={handleChange}
+      onSelect={handleChange}
       onFocus={handleFocus}
       onBlur={handleBlur}
       getEmptySearchValue={getEmptySearchValue}
