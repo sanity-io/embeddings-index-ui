@@ -61,7 +61,7 @@ defineField({
     embeddingsIndex: {
       indexName: 'my-index', // Name of the embeddings index
       maxResults: 10, // Max. number of returned results per request. Default: 10
-      searchMode: 'embeddings' // 'embeddings': implement semantic search || 'default': use default search based on GROQ filter
+      searchMode: 'embeddings' // 'embeddings': implement semantic search | 'default': use default search based on GROQ filter
     }
   }
 })
