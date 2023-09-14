@@ -1,19 +1,19 @@
 # @sanity/embeddings-index-ui
+
 > This package contains plugins for **Sanity Studio v3**.
 
-Sanity Studio plugins that interacts with the `/embeddings-index` HTTP API.
+Sanity Studio plugins that interact with the `/embeddings-index` HTTP API.
 
 The embeddings index API allows the creation of named embeddings vector indexes.
-An embeddings index contains embeddings for all Sanity documents matching a configured GROQ filter in a dataset.
-A GROQ projection is applied to matching documents before vectorization.
+An embeddings index contains embeddings for all Sanity documents matching a configured [GROQ filter](https://www.sanity.io/docs/how-queries-work) in a dataset.
+A [GROQ projection](https://www.sanity.io/docs/query-cheat-sheet) is applied to matching documents before vectorization.
 
-Indexes can be queried using semantic text search, and returns a list of matching document ids,
-sorted by relevance.
+You can query indexes using semantic text search to obtain a list of matching document IDs sorted by relevance.
 
-When an index is first created, all documents matching the configured filter will be synced into the index.
-This can take some time depending on the number of documents that need to be synced.
+When an index is first created, all documents matching the configured filter are synced into the index.
+Creating an index can take time, depending on the number of existing documents and the indexer load.
 
-For a CLI alternative, check out the [Embeddings index CLI](https://github.com/sanity-io/embeddings-index-cli) package.
+For a CLI alternative, check out the [Embeddings Index CLI](https://github.com/sanity-io/embeddings-index-cli) package.
 
 ## Installation
 
@@ -24,21 +24,21 @@ npm install @sanity/embeddings-index-ui
 `@sanity/embeddings-index-ui` contains the following Sanity Studio plugins: 
 
 * [embeddingsIndexReferenceInput](#embeddings-index-reference-input): semantic search mode for reference inputs
-* [embeddingsIndexDashboard](#embeddings-index-dashboard): manage indexes in a Sanity studio tool
+* [embeddingsIndexDashboard](#embeddings-index-dashboard): manage indexes in a Sanity Studio UI tool
 
-Consult each section for usage details.
+For more information about how to use the plugins, see the relevant sections below.
 
 ## Embeddings index reference input
 
 <img width="619" alt="image" src="https://github.com/sanity-io/sanity/assets/835514/55d372fe-c5fe-40dd-882b-10c6e8794442">
 
-The `embeddingsIndexReferenceInput` plugin allows references fields to opt-in to embeddings index search.
-This users to search for references using natural language to find documents based on semantic meaning,
-bypassing the need for exact word matches.
+The `embeddingsIndexReferenceInput` plugin allows reference fields to opt in to embeddings index search.
+This enables users to search for references using natural language, and to retrieve documents based on semantic meaning,
+rather than exact word matches.
 
 ### Usage
 
-Add `embeddingsIndexReferenceInput` as a plugin in `sanity.config.ts` (or .js):
+Add `embeddingsIndexReferenceInput` as a plugin to `sanity.config.ts` (or `.js`):
 
 ```ts
 import {defineConfig} from 'sanity'
@@ -50,37 +50,37 @@ export default defineConfig({
 })
 ```
 
-Next, enabled semantic search using `options.embeddingsIndex` on reference fields:
+Then, enable semantic search using `options.embeddingsIndex` on reference fields.
+Example of a default configuration for a reference field:
 
 ```ts
 defineField({
   name: 'myField',
   type: 'reference',
-  to: [{type: 'myType'}],
+  to: [{type: 'myType'}], // The type(s) of document(s) to include
   options: {
     embeddingsIndex: {
-      indexName: 'my-index',
-      maxResults: 10, // default,
-      searchMode: 'embeddings' // defaults value is 'default'
+      indexName: 'my-index', // Name of the embeddings index
+      maxResults: 10, // Max. number of returned results per request. Default: 10
+      searchMode: 'embeddings' // Sets default search mode for the field. Enables toggling between 'embeddings' (semantic search) and 'default' (default search based on GROQ filter)
     }
   }
 })
 ```
 
-Setting `options.embedembeddingsIndexdings.indexName` on a reference field will allow enabled searching into the named index.
+Setting `options.embeddings.indexName` on a reference field enables searching into the named index.
 
-This will add a "search mode" toggle button to the field.
+*Note*: the search uses `to` types as a filter for the index. Therefore, the types that the
+the reference field expects must exist in the index: the GROQ query specified in the embeddings index
+`filter` must include one or more documents that are relevant to the reference field.
 
-*Note*: The search will use `to` types as a filter into the index, so it important
-that the types the reference field expects actually exist in the index 
-(ie, the embeddings index `filter` contains one or more documents relevant to the reference field).
+*Caveats*: the semantic search functionality does not honor `options.filter`.
 
-*Caveats*:
-`options.filter` is not respected by the semantic search.
+### Default embeddings index configuration
 
-### Default embeddings index config
+You can enable a default configuration for the reference inputs through the plugin configuration.
 
-Default config for the reference inputs can be enabled using plugin configuration:
+Example:
 
 ```ts
 import {defineConfig} from 'sanity'
@@ -89,15 +89,15 @@ import {embeddingsIndexReferenceInput} from '@sanity/embeddings-index-ui'
 export default defineConfig({
   //...
   plugins: [embeddingsIndexReferenceInput({
-    indexName: 'my-index', // inputs will use 'my-index' as indexName by default
-    maxResults: 15, // now 15 will be the default maxResult for inputs,
-    searchMode: 'embeddings' // now 'embeddings' will be the default searchMode for inputs
+    indexName: 'my-index', // Inputs use 'my-index' as the default index
+    maxResults: 15, // Inputs return max. 15 results per request
+    searchMode: 'embeddings' // Semantic search is the default search mode
   })],
 })
 ```
 
-When the plugin has a default indexName set like this, the embeddings search can also
-be enabled using `options.embeddingsIndex: true` for a reference field:
+If you assign a default `indexName` to the plugin, you can also enable embeddings search
+by setting `options.embeddingsIndex: true` for a reference field:
 
 ```ts
 defineField({
@@ -111,15 +111,15 @@ defineField({
 ```
 
 ## Embeddings index dashboard
-An UI alternative to the [Embeddings index CLI](https://github.com/sanity-io/embeddings-index-cli)
-Manage embeddings indexes in a Studio dashboard.
+
+A UI alternative to the [Embeddings ˆndex CLI](https://github.com/sanity-io/embeddings-index-cli) to
+manage embeddings indexes in a Studio dashboard.
 
 <img width="1227" alt="image" src="https://github.com/sanity-io/sanity/assets/835514/279b03b8-d2c0-4cc1-bbe6-9d335937f25a">
 
+### Usage
 
-## Usage
-
-Add `embeddingsIndexDashboard` as a plugin in `sanity.config.ts` (or .js):
+Add `embeddingsIndexDashboard` as a plugin to `sanity.config.ts` (or `.js`):
 
 ```ts
 import {defineConfig} from 'sanity'
@@ -135,9 +135,9 @@ export default defineConfig({
 })
 ```
 
-This will add the Embeddings tool to the studio nav-bar, only when studio is running in developer mode (localhost).
+This adds the Embeddings Index tool to the studio navigation bar, but only when the studio is running in developer mode (`localhost`).
 
-You might instead want to enable this tool based on roles instead:
+If you want to enable the tool based on user access roles:
 
 ```ts
 import {defineConfig} from 'sanity'
@@ -157,20 +157,17 @@ export default defineConfig({
 })
 ```
 
-
-
 ## License
 
 [MIT](LICENSE) © Sanity
 
-## Develop & test
+## Develop and test
 
 This plugin uses [@sanity/plugin-kit](https://github.com/sanity-io/plugin-kit)
-with default configuration for build & watch scripts.
+with default configuration for build and watch scripts.
 
 See [Testing a plugin in Sanity Studio](https://github.com/sanity-io/plugin-kit#testing-a-plugin-in-sanity-studio)
-on how to run this plugin with hotreload in the studio.
-
+on how to run this plugin with hot reload in the studio.
 
 ### Release new version
 
