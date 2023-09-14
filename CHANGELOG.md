@@ -5,6 +5,18 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/sanity-io/embeddings-index-ui/compare/v1.0.3...v1.1.0) (2023-09-14)
+
+### Features
+
+- autocomplete in index tool search ([0b84d80](https://github.com/sanity-io/embeddings-index-ui/commit/0b84d80e63d1cde83856d2443c2731fdd67a7654))
+- support for default index configuration ([18da837](https://github.com/sanity-io/embeddings-index-ui/commit/18da837aabcaa9b64233d16167e4aa32d562f09c))
+
+### Bug Fixes
+
+- adder border to index entries to invite interaction ([bd1bc64](https://github.com/sanity-io/embeddings-index-ui/commit/bd1bc64c7ee988bef390ec5e5465f32d5eb4b611))
+- show filter before projection in index form ([c403917](https://github.com/sanity-io/embeddings-index-ui/commit/c4039177e6824fcea5c2936df899ea7235813e42))
+
 ## [1.0.3](https://github.com/sanity-io/embeddings-index-ui/compare/v1.0.2...v1.0.3) (2023-09-13)
 
 ### Bug Fixes
