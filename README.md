@@ -67,7 +67,7 @@ defineField({
 })
 ```
 
-Setting `options.embeddings.indexName` on a reference field will allow enabled searching into the named index.
+Setting `options.embedembeddingsIndexdings.indexName` on a reference field will allow enabled searching into the named index.
 
 This will add a "search mode" toggle button to the field.
 
@@ -77,6 +77,38 @@ that the types the reference field expects actually exist in the index
 
 *Caveats*:
 `options.filter` is not respected by the semantic search.
+
+### Default embeddings index config
+
+Default config for the reference inputs can be enabled using plugin configuration:
+
+```ts
+import {defineConfig} from 'sanity'
+import {embeddingsIndexReferenceInput} from '@sanity/embeddings-index-ui'
+
+export default defineConfig({
+  //...
+  plugins: [embeddingsIndexReferenceInput({
+    indexName: 'my-index', // inputs will use 'my-index' as indexName by default
+    maxResults: 15, // now 15 will be the default maxResult for inputs,
+    searchMode: 'embeddings' // now 'embeddings' will be the default searchMode for inputs
+  })],
+})
+```
+
+When the plugin has a default indexName set like this, the embeddings search can also
+be enabled using `options.embeddingsIndex: true` for a reference field:
+
+```ts
+defineField({
+  name: 'myField',
+  type: 'reference',
+  to: [{type: 'myType'}],
+  options: {
+    embeddingsIndex: true
+  }
+})
+```
 
 ## Embeddings index dashboard
 An UI alternative to the [Embeddings index CLI](https://github.com/sanity-io/embeddings-index-cli)
