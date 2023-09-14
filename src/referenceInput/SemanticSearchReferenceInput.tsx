@@ -4,35 +4,17 @@ import {
   ReferenceSchemaType,
   set,
   setIfMissing,
-  typed,
   unset,
 } from 'sanity'
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Flex,
-  Text,
-  AutocompleteOpenButtonProps,
-  Spinner,
-} from '@sanity/ui'
+import {Box, Button, Flex, Spinner} from '@sanity/ui'
 import {EarthGlobeIcon, LinkIcon} from '@sanity/icons'
-import {useCallback, useEffect, useId, useMemo, useRef, useState} from 'react'
-import {DocumentPreview} from '../preview/DocumentPreview'
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {useDocumentPane} from 'sanity/desk'
-import {queryIndex, QueryResult} from '../api/embeddingsApi'
+import {QueryResult} from '../api/embeddingsApi'
 import {publicId} from '../utils/id'
-import {useApiClient} from '../api/embeddingsApiHooks'
 import {FeatureDisabledNotice, useIsFeatureEnabledContext} from '../api/isEnabled'
 import {EmbeddingsIndexConfig} from '../schemas/typeDefExtensions'
-
-interface Option {
-  result: QueryResult
-  value: string
-}
-
-const NO_OPTIONS: Option[] = []
-const NO_FILTER = () => true
+import {SemanticSearchAutocomplete} from './SemanticSearchAutocomplete'
 
 function useEmeddingsConfig(
   embeddingsIndexConfig: ReferenceBaseOptions['embeddingsIndex'],
@@ -106,37 +88,12 @@ export function SemanticSearchReferenceInput(
   )
 }
 
-function useDebouncedValue<T>(value: T, ms: number) {
-  const [debouncedValue, setDebouncedValue] = useState(value)
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      setDebouncedValue(value)
-    }, ms)
-    return () => clearTimeout(timeoutId)
-  }, [value, ms])
-
-  return debouncedValue
-}
-
 function SemanticSearchInput(props: ObjectInputProps & {indexConfig: EmbeddingsIndexConfig}) {
   const {indexConfig, onPathFocus, onChange, readOnly, schemaType, value} = props
 
   const {value: currentDocument} = useDocumentPane()
   const docRef = useRef(currentDocument)
   const autocompleteRef = useRef<HTMLInputElement>(null)
-
-  const id = useId()
-
-  const [query, setQuery] = useState('')
-  const queryRef = useRef(query)
-  const debouncedQuery = useDebouncedValue(query, 300)
-  const prevDebouncedQuery = useRef(debouncedQuery)
-
-  const [searching, setSearching] = useState(false)
-  const [options, setOptions] = useState(NO_OPTIONS)
-
-  const client = useApiClient()
 
   useEffect(() => {
     docRef.current = currentDocument
@@ -153,58 +110,6 @@ function SemanticSearchInput(props: ObjectInputProps & {indexConfig: EmbeddingsI
 
   const handleFocus = useCallback(() => onPathFocus(['_ref']), [onPathFocus])
   const handleBlur = useCallback(() => onPathFocus([]), [onPathFocus])
-
-  const runIndexQuery = useCallback(
-    (queryString: string) => {
-      setSearching(true)
-      const refSchema = schemaType as ReferenceSchemaType
-      const indexName = indexConfig?.indexName
-      const maxResults = indexConfig?.maxResults
-      const typeFilter = refSchema.to.map((ref) => ref.name)
-
-      if (!indexName) {
-        throw new Error(
-          `Reference option embeddingsIndex.indexName is required, but was missing in type ${refSchema.name}`,
-        )
-      }
-
-      queryIndex(
-        {
-          query: queryString.trim().length ? queryString : JSON.stringify(docRef.current) ?? '',
-          indexName,
-          maxResults,
-          filter: {
-            type: typeFilter,
-          },
-        },
-        client,
-      )
-        .then((result: QueryResult[]) => {
-          if (queryRef.current === queryString) {
-            setSearching(false)
-            setOptions(
-              result
-                .filter((r) => r.value.documentId !== publicId(docRef.current._id))
-                .map((r) => typed<Option>({result: r, value: r.value.documentId})),
-            )
-          }
-        })
-        .catch((e) => {
-          if (queryRef.current === queryString) {
-            setSearching(false)
-          }
-          throw e
-        })
-    },
-    [client, schemaType, indexConfig],
-  )
-
-  useEffect(() => {
-    if (prevDebouncedQuery.current !== debouncedQuery) {
-      runIndexQuery(debouncedQuery)
-    }
-    prevDebouncedQuery.current = debouncedQuery
-  }, [debouncedQuery, runIndexQuery])
 
   const handleChange = useCallback(
     (nextId: string) => {
@@ -229,54 +134,28 @@ function SemanticSearchInput(props: ObjectInputProps & {indexConfig: EmbeddingsI
     [onChange, onPathFocus, schemaType.name],
   )
 
-  const openButtonConfig: AutocompleteOpenButtonProps = useMemo(
-    () => ({onClick: () => runIndexQuery(queryRef.current)}),
-    [runIndexQuery, queryRef],
+  const filterResult = useCallback(
+    (r: QueryResult) => r.value.documentId !== publicId(docRef.current._id),
+    [docRef],
   )
 
-  const handleQueryChange = useCallback(
-    (newValue: string | null) => {
-      const newQuery = newValue ?? ''
-      queryRef.current = newQuery
-      setQuery(newQuery)
-    },
-    [setQuery],
+  const getEmptySearchValue = useCallback(() => JSON.stringify(docRef.current), [docRef])
+  const typeFilter = useMemo(
+    () => (schemaType as ReferenceSchemaType).to.map((refType) => refType.name),
+    [schemaType],
   )
 
   return (
-    <Autocomplete
-      id={id}
+    <SemanticSearchAutocomplete
       ref={autocompleteRef}
-      data-testid="semantic-autocomplete"
-      placeholder="Type to search..."
-      openButton={openButtonConfig}
-      onFocus={handleFocus}
+      typeFilter={typeFilter}
+      indexConfig={indexConfig}
       onChange={handleChange}
-      loading={searching}
+      onFocus={handleFocus}
       onBlur={handleBlur}
+      getEmptySearchValue={getEmptySearchValue}
+      filterResult={filterResult}
       readOnly={readOnly}
-      filterOption={NO_FILTER}
-      onQueryChange={handleQueryChange}
-      options={options}
-      renderOption={AutocompleteOption}
     />
-  )
-}
-
-function AutocompleteOption(props: Option) {
-  const value = props.result.value
-  return (
-    <Button mode="bleed" padding={1} style={{width: '100%'}}>
-      <Flex gap={2} align="center">
-        <Box flex={1}>
-          <DocumentPreview documentId={value.documentId} schemaTypeName={value.type} />
-        </Box>
-        <Box padding={2}>
-          <Text size={1} muted title={'Relevance'}>
-            {Math.floor(props.result.score * 100)}%
-          </Text>
-        </Box>
-      </Flex>
-    </Button>
   )
 }
