@@ -75,9 +75,11 @@ the reference field expects must exist in the index: the GROQ query specified in
 
 *Caveats*: the semantic search functionality does not honor `options.filter`.
 
-### Default embeddings index config
+### Default embeddings index configuration
 
-Default config for the reference inputs can be enabled using plugin configuration:
+You can enable a default configuration for the reference inputs through the plugin configuration.
+
+Example:
 
 ```ts
 import {defineConfig} from 'sanity'
@@ -86,15 +88,15 @@ import {embeddingsIndexReferenceInput} from '@sanity/embeddings-index-ui'
 export default defineConfig({
   //...
   plugins: [embeddingsIndexReferenceInput({
-    indexName: 'my-index', // inputs will use 'my-index' as indexName by default
-    maxResults: 15, // now 15 will be the default maxResult for inputs,
-    searchMode: 'embeddings' // now 'embeddings' will be the default searchMode for inputs
+    indexName: 'my-index', // Inputs use 'my-index' as the default index
+    maxResults: 15, // Inputs return max. 15 results per request
+    searchMode: 'embeddings' // Semantic search is the default search mode
   })],
 })
 ```
 
-When the plugin has a default indexName set like this, the embeddings search can also
-be enabled using `options.embeddingsIndex: true` for a reference field:
+If you assign a default `indexName` to the plugin, you can also enable embeddings search
+by setting `options.embeddingsIndex: true` for a reference field:
 
 ```ts
 defineField({
@@ -132,7 +134,7 @@ export default defineConfig({
 })
 ```
 
-This adds the Embeddings Index tool to the studio navigation bar, but only when the studio is running in developer mode (`localhost).
+This adds the Embeddings Index tool to the studio navigation bar, but only when the studio is running in developer mode (`localhost`).
 
 If you want to enable the tool based on user access roles:
 
@@ -165,7 +167,6 @@ with default configuration for build and watch scripts.
 
 See [Testing a plugin in Sanity Studio](https://github.com/sanity-io/plugin-kit#testing-a-plugin-in-sanity-studio)
 on how to run this plugin with hot reload in the studio.
-
 
 ### Release new version
 
