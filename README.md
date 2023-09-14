@@ -50,7 +50,8 @@ export default defineConfig({
 })
 ```
 
-Then, enable semantic search using `options.embeddingsIndex` on reference fields:
+Then, enable semantic search using `options.embeddingsIndex` on reference fields.
+Example of a default configuration for a reference field:
 
 ```ts
 defineField({
@@ -61,7 +62,7 @@ defineField({
     embeddingsIndex: {
       indexName: 'my-index', // Name of the embeddings index
       maxResults: 10, // Max. number of returned results per request. Default: 10
-      searchMode: 'embeddings' // 'embeddings': implement semantic search | 'default': use default search based on GROQ filter
+      searchMode: 'embeddings' // Sets default search mode for the field. Enables toggling between 'embeddings' (semantic search) and 'default' (default search based on GROQ filter)
     }
   }
 })
