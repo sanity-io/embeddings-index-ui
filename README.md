@@ -1,10 +1,11 @@
-# @sanity/embeddings-index-ui
+# Sanity Embeddings Index UI
 
-> This package contains plugins for **Sanity Studio v3**.
+> Using this feature requires Sanity to send data to OpenAI[.]com, and Pinecone[.]io for storing vector interpretations of documents.
 
-Sanity Studio plugins that interact with the `/embeddings-index` HTTP API.
+Sanity Studio v3 plugins that interact with the `/embeddings-index` HTTP API.
 
-The embeddings index API allows the creation of named embeddings vector indexes.
+The Embeddings Index API enables creating named embeddings vector indexes.
+
 An embeddings index contains embeddings for all Sanity documents matching a configured [GROQ filter](https://www.sanity.io/docs/how-queries-work) in a dataset.
 A [GROQ projection](https://www.sanity.io/docs/query-cheat-sheet) is applied to matching documents before vectorization.
 
@@ -28,15 +29,14 @@ npm install @sanity/embeddings-index-ui
 * [embeddingsIndexReferenceInput](#embeddings-index-reference-input): semantic search mode for reference inputs
 * [embeddingsIndexDashboard](#embeddings-index-dashboard): manage indexes in a Sanity Studio UI tool
 
-For more information about how to use the plugins, see the relevant sections below.
+For more information about using the plugins, see the relevant sections below.
 
 ## Embeddings index reference input
 
 <img width="619" alt="image" src="https://github.com/sanity-io/sanity/assets/835514/55d372fe-c5fe-40dd-882b-10c6e8794442">
 
 The `embeddingsIndexReferenceInput` plugin allows reference fields to opt in to embeddings index search.
-This enables users to search for references using natural language, and to retrieve documents based on semantic meaning,
-rather than exact word matches.
+This enables users to search for references using natural language, and to retrieve documents based on semantic meaning, rather than exact word matches.
 
 ### Usage
 
