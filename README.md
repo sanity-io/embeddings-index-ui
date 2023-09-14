@@ -83,7 +83,7 @@ manage embeddings indexes in a Studio dashboard.
 
 <img width="1227" alt="image" src="https://github.com/sanity-io/sanity/assets/835514/279b03b8-d2c0-4cc1-bbe6-9d335937f25a">
 
-## Usage
+### Usage
 
 Add `embeddingsIndexDashboard` as a plugin to `sanity.config.ts` (or `.js`):
 
