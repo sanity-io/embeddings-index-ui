@@ -1,4 +1,12 @@
-import {ObjectInputProps, ReferenceSchemaType, set, setIfMissing, typed, unset} from 'sanity'
+import {
+  ObjectInputProps,
+  ReferenceBaseOptions,
+  ReferenceSchemaType,
+  set,
+  setIfMissing,
+  typed,
+  unset,
+} from 'sanity'
 import {
   Autocomplete,
   Box,
@@ -16,6 +24,7 @@ import {queryIndex, QueryResult} from '../api/embeddingsApi'
 import {publicId} from '../utils/id'
 import {useApiClient} from '../api/embeddingsApiHooks'
 import {FeatureDisabledNotice, useIsFeatureEnabledContext} from '../api/isEnabled'
+import {EmbeddingsIndexConfig} from '../schemas/typeDefExtensions'
 
 interface Option {
   result: QueryResult
@@ -25,9 +34,43 @@ interface Option {
 const NO_OPTIONS: Option[] = []
 const NO_FILTER = () => true
 
-export function SemanticSearchReferenceInput(props: ObjectInputProps) {
-  const defaultEnabled =
-    (props.schemaType as ReferenceSchemaType)?.options?.embeddingsIndex?.searchMode === 'embeddings'
+function useEmeddingsConfig(
+  embeddingsIndexConfig: ReferenceBaseOptions['embeddingsIndex'],
+  defaultConfig: EmbeddingsIndexConfig | undefined,
+) {
+  return useMemo(() => {
+    if (embeddingsIndexConfig === true || !embeddingsIndexConfig) {
+      if (!defaultConfig?.indexName) {
+        throw new Error(
+          'Default embeddingsIndex config is missing. When options.embeddingsIndex: true, embeddingsIndexReferenceInput plugin config is required.',
+        )
+      }
+      return defaultConfig
+    }
+
+    const finalConfig = {
+      ...defaultConfig,
+      ...embeddingsIndexConfig,
+    }
+
+    if (!finalConfig?.indexName) {
+      throw new Error(
+        'indexName is missing. Either set it in options.embeddingsIndex or configure defaults using plugin config.',
+      )
+    }
+
+    return finalConfig
+  }, [defaultConfig, embeddingsIndexConfig])
+}
+
+export function SemanticSearchReferenceInput(
+  props: ObjectInputProps & {defaultConfig?: EmbeddingsIndexConfig},
+) {
+  const embeddingsIndexConfig = (props.schemaType as ReferenceSchemaType)?.options?.embeddingsIndex
+
+  const config = useEmeddingsConfig(embeddingsIndexConfig, props.defaultConfig)
+
+  const defaultEnabled = config.searchMode === 'embeddings'
 
   const featureState = useIsFeatureEnabledContext()
 
@@ -46,7 +89,7 @@ export function SemanticSearchReferenceInput(props: ObjectInputProps) {
 
       <Box flex={1} style={{maxHeight: 36, overflow: 'hidden'}}>
         {semantic && featureState == 'enabled' ? (
-          <SemanticSearchInput {...props} />
+          <SemanticSearchInput {...props} indexConfig={config} />
         ) : (
           props.renderDefault(props)
         )}
@@ -76,8 +119,8 @@ function useDebouncedValue<T>(value: T, ms: number) {
   return debouncedValue
 }
 
-function SemanticSearchInput(props: ObjectInputProps) {
-  const {onPathFocus, onChange, readOnly, schemaType, value} = props
+function SemanticSearchInput(props: ObjectInputProps & {indexConfig: EmbeddingsIndexConfig}) {
+  const {indexConfig, onPathFocus, onChange, readOnly, schemaType, value} = props
 
   const {value: currentDocument} = useDocumentPane()
   const docRef = useRef(currentDocument)
@@ -115,8 +158,8 @@ function SemanticSearchInput(props: ObjectInputProps) {
     (queryString: string) => {
       setSearching(true)
       const refSchema = schemaType as ReferenceSchemaType
-      const indexName = refSchema.options?.embeddingsIndex?.indexName
-      const maxResults = refSchema.options?.embeddingsIndex?.maxResults
+      const indexName = indexConfig?.indexName
+      const maxResults = indexConfig?.maxResults
       const typeFilter = refSchema.to.map((ref) => ref.name)
 
       if (!indexName) {
@@ -153,7 +196,7 @@ function SemanticSearchInput(props: ObjectInputProps) {
           throw e
         })
     },
-    [client, schemaType],
+    [client, schemaType, indexConfig],
   )
 
   useEffect(() => {

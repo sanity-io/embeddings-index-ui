@@ -68,13 +68,44 @@ defineField({
 ```
 
 Setting `options.embeddings.indexName` on a reference field enables searching into the named index.
-When enabled, this option adds a _search mode_ toggle button for the field in the UI.
 
 *Note*: the search uses `to` types as a filter for the index. Therefore, the types that the
 the reference field expects must exist in the index: the GROQ query specified in the embeddings index
 `filter` must include one or more documents that are relevant to the reference field.
 
 *Caveats*: the semantic search functionality does not honor `options.filter`.
+
+### Default embeddings index config
+
+Default config for the reference inputs can be enabled using plugin configuration:
+
+```ts
+import {defineConfig} from 'sanity'
+import {embeddingsIndexReferenceInput} from '@sanity/embeddings-index-ui'
+
+export default defineConfig({
+  //...
+  plugins: [embeddingsIndexReferenceInput({
+    indexName: 'my-index', // inputs will use 'my-index' as indexName by default
+    maxResults: 15, // now 15 will be the default maxResult for inputs,
+    searchMode: 'embeddings' // now 'embeddings' will be the default searchMode for inputs
+  })],
+})
+```
+
+When the plugin has a default indexName set like this, the embeddings search can also
+be enabled using `options.embeddingsIndex: true` for a reference field:
+
+```ts
+defineField({
+  name: 'myField',
+  type: 'reference',
+  to: [{type: 'myType'}],
+  options: {
+    embeddingsIndex: true
+  }
+})
+```
 
 ## Embeddings index dashboard
 
