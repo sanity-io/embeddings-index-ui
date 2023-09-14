@@ -141,19 +141,21 @@ export function IndexEditor(props: {
         />
         <IndexFormInput label="Dataset" index={index} prop="dataset" onChange={setIndex} readOnly />
         <IndexFormInput
-          label="Projection"
-          placeholder={defaultIndex.projection}
+          label="Filter"
+          description="Must be a valid GROQ filter"
+          placeholder={defaultIndex.filter}
           index={index}
-          prop="projection"
+          prop="filter"
           onChange={setIndex}
           readOnly={readOnly}
           type="textarea"
         />
         <IndexFormInput
-          label="Filter"
-          placeholder={defaultIndex.filter}
+          label="Projection"
+          description="Must be a valid GROQ projection, starting { and ending with }"
+          placeholder={defaultIndex.projection}
           index={index}
-          prop="filter"
+          prop="projection"
           onChange={setIndex}
           readOnly={readOnly}
           type="textarea"

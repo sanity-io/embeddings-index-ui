@@ -1,11 +1,12 @@
 import {NamedIndex} from '../api/embeddingsApi'
 import {Dispatch, FormEvent, SetStateAction, useCallback, useId} from 'react'
-import {Label, Stack, TextArea, TextInput} from '@sanity/ui'
+import {Box, Label, Stack, TextArea, TextInput, Text} from '@sanity/ui'
 
 export interface IndexFormInputProps {
   index: Partial<NamedIndex>
   prop: keyof NamedIndex
   label: string
+  description?: string
   onChange: Dispatch<SetStateAction<Partial<NamedIndex>>>
   readOnly: boolean
   placeholder?: string
@@ -13,7 +14,7 @@ export interface IndexFormInputProps {
 }
 
 export function IndexFormInput(props: IndexFormInputProps) {
-  const {label, index, prop, onChange, readOnly, placeholder, type} = props
+  const {label, description, index, prop, onChange, readOnly, placeholder, type} = props
   const handleChange = useCallback(
     (propValue: string) => onChange((current) => ({...current, [prop]: propValue})),
     [onChange, prop],
@@ -21,6 +22,7 @@ export function IndexFormInput(props: IndexFormInputProps) {
   return (
     <FormInput
       label={label}
+      description={description}
       onChange={handleChange}
       value={index[prop] ?? ''}
       readOnly={readOnly}
@@ -32,6 +34,7 @@ export function IndexFormInput(props: IndexFormInputProps) {
 
 interface FormInputProps {
   label: string
+  description?: string
   onChange: (value: string) => void
   value: string
   readOnly: boolean
@@ -40,7 +43,7 @@ interface FormInputProps {
 }
 
 function FormInput(props: FormInputProps) {
-  const {label, onChange, value, readOnly, placeholder, type = 'text'} = props
+  const {label, description, onChange, value, readOnly, placeholder, type = 'text'} = props
   const id = useId()
   const handleChange = useCallback(
     (e: FormEvent<HTMLInputElement | HTMLTextAreaElement>) => onChange(e.currentTarget.value),
@@ -51,6 +54,13 @@ function FormInput(props: FormInputProps) {
       <Label muted htmlFor={id}>
         <label htmlFor={id}>{label}</label>
       </Label>
+      {description && (
+        <Box>
+          <Text size={1} muted>
+            {description}
+          </Text>
+        </Box>
+      )}
       {type === 'text' ? (
         <TextInput
           id={id}
