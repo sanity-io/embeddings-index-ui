@@ -5,6 +5,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.4](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.3...v1.1.4) (2023-09-15)
+
+### Bug Fixes
+
+- **docs:** remove duplicate quoted notice about OpenAI and Pinecone ([8da14f0](https://github.com/sanity-io/embeddings-index-ui/commit/8da14f061b26310dcec8efa9abfa59561eee37fe))
+- reworded team plan required banner ([c1569ce](https://github.com/sanity-io/embeddings-index-ui/commit/c1569ce451d2279f1d711379107ddba3ca2d28aa))
+
 ## [1.1.3](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.2...v1.1.3) (2023-09-14)
 
 ### Bug Fixes
