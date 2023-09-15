@@ -1,4 +1,4 @@
-import {useClient} from 'sanity'
+import {useClient, useProjectId} from 'sanity'
 import {createContext, PropsWithChildren, useContext, useEffect, useState} from 'react'
 import {Card, Text} from '@sanity/ui'
 
@@ -40,13 +40,17 @@ export function useIsFeatureEnabledContext(): FeatureStatus {
   return useContext(FeatureEnabledContext)
 }
 
-export function FeatureDisabledNotice() {
+export function FeatureDisabledNotice(props: {urlSuffix?: string}) {
+  const projectId = useProjectId()
+
   return (
-    <Card tone="primary" border padding={2}>
+    <Card tone="primary" border padding={4}>
       <Text size={1}>
-        Embeddings index APIs are only available on the{' '}
-        <a href="https://sanity.io/pricing">Team tier and above</a>. Please upgrade to enable
-        access.
+        💎 Unlock semantic search with Embeddings Index APIs — available on Team, Business, and
+        Enterprise plans.{' '}
+        <a href={`https://www.sanity.io/manage/project/${projectId}/plan${props.urlSuffix ?? ''}`}>
+          Upgrade now →
+        </a>
       </Text>
     </Card>
   )

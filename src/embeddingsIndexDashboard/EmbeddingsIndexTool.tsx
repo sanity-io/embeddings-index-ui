@@ -13,15 +13,18 @@ export function EmbeddingsIndexTool() {
   return (
     <Card>
       <Flex justify="center" flex={1}>
+        {featureState == 'disabled' ? (
+          <Box padding={4}>
+            <FeatureDisabledNotice urlSuffix="?ref=embeddings-tab" />
+          </Box>
+        ) : null}
+
         <Card flex={1} style={{maxWidth: 1200}} padding={5}>
           {featureState == 'loading' ? (
             <Box padding={2}>
               <Spinner />
             </Box>
           ) : null}
-
-          {featureState == 'disabled' ? <FeatureDisabledNotice /> : null}
-
           {featureState == 'enabled' ? <Indexes /> : null}
         </Card>
       </Flex>

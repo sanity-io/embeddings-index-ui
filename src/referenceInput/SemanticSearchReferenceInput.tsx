@@ -67,7 +67,9 @@ export function SemanticSearchReferenceInput(
         </Box>
       ) : null}
 
-      {semantic && featureState == 'disabled' ? <FeatureDisabledNotice /> : null}
+      {semantic && featureState == 'disabled' ? (
+        <FeatureDisabledNotice urlSuffix="?ref=embeddings-ref" />
+      ) : null}
 
       <Box flex={1} style={{maxHeight: 36, overflow: 'hidden'}}>
         {semantic && featureState == 'enabled' ? (
