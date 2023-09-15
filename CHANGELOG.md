@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.4...v1.1.5) (2023-09-15)
+
+### Bug Fixes
+
+- plan typo ([dd01dc7](https://github.com/sanity-io/embeddings-index-ui/commit/dd01dc73b88e5b8716c8196f527b51de2140e8e4))
+
 ## [1.1.4](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.3...v1.1.4) (2023-09-15)
 
 ### Bug Fixes
