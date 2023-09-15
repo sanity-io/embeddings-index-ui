@@ -46,7 +46,7 @@ export function FeatureDisabledNotice(props: {urlSuffix?: string}) {
   return (
     <Card tone="primary" border padding={4}>
       <Text size={1}>
-        💎 Unlock semantic search with Embeddings Index APIs — available on Team, Business, and
+        💎 Unlock semantic search with the Embeddings Index API — available on Team, Business, and
         Enterprise plans.{' '}
         <a href={`https://www.sanity.io/manage/project/${projectId}/plan${props.urlSuffix ?? ''}`}>
           Upgrade now →
