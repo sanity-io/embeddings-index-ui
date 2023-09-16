@@ -1,6 +1,6 @@
 # Sanity Embeddings Index UI
 
-> Using this feature requires Sanity to send data to OpenAI[.]com, and Pinecone[.]io for storing vector interpretations of documents.
+> Using this feature requires Sanity to send data to OpenAI.com, and Pinecone.io for storing vector interpretations of documents.
 
 Sanity Studio v3 plugins that interact with the `/embeddings-index` HTTP API.
 
