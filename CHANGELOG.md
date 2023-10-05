@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.6](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.5...v1.1.6) (2023-10-05)
+
+### Bug Fixes
+
+- users with read access, but without project/read grant will no longer get a missing plan feature dialog ([edcfa36](https://github.com/sanity-io/embeddings-index-ui/commit/edcfa36f4a4ccea8f5342f2eeaa10db46bbb6c58))
+
 ## [1.1.5](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.4...v1.1.5) (2023-09-15)
 
 ### Bug Fixes
