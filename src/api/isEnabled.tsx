@@ -1,24 +1,23 @@
-import {useClient, useProjectId} from 'sanity'
+import {useProjectId} from 'sanity'
 import {createContext, PropsWithChildren, useContext, useEffect, useState} from 'react'
 import {Card, Text} from '@sanity/ui'
-
-const featureName = 'embeddingsIndexApi'
+import {useApiClient} from './embeddingsApiHooks'
 
 export type FeatureStatus = 'enabled' | 'disabled' | 'loading'
 export const FeatureEnabledContext = createContext<FeatureStatus>('loading')
 
 export function useIsFeatureEnabled() {
-  const client = useClient({apiVersion: '2023-09-01'})
+  const client = useApiClient()
   const [status, setStatus] = useState<FeatureStatus>('loading')
 
   useEffect(() => {
     client
-      .request<string | boolean>({
+      .request<{enabled: boolean}>({
         method: 'GET',
-        url: `/projects/${client.config().projectId}/features/${featureName}`,
+        url: `/embeddings-index/status`,
       })
-      .then((isEnabled) => {
-        setStatus(isEnabled === 'true' || isEnabled === true ? 'enabled' : 'disabled')
+      .then((response) => {
+        setStatus(response.enabled ? 'enabled' : 'disabled')
       })
       .catch((err) => {
         console.error(err)
