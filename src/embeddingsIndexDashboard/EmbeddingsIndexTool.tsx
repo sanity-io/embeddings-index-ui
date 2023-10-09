@@ -6,27 +6,36 @@ import {EditIndexDialog} from './IndexEditor'
 import {IndexList} from './IndexList'
 import {IndexInfo} from './IndexInfo'
 import {useApiClient} from '../api/embeddingsApiHooks'
-import {FeatureDisabledNotice, useIsFeatureEnabled} from '../api/isEnabled'
+import {FeatureDisabledNotice, FeatureError, useIsFeatureEnabled} from '../api/isEnabled'
 
 export function EmbeddingsIndexTool() {
   const featureState = useIsFeatureEnabled()
   return (
-    <Card>
+    <Card flex={1}>
       <Flex justify="center" flex={1}>
-        {featureState == 'disabled' ? (
+        {featureState === 'error' ? (
+          <Box padding={4}>
+            <FeatureError />
+          </Box>
+        ) : null}
+
+        {featureState === 'disabled' ? (
           <Box padding={4}>
             <FeatureDisabledNotice urlSuffix="?ref=embeddings-tab" />
           </Box>
         ) : null}
 
-        <Card flex={1} style={{maxWidth: 1200}} padding={5}>
-          {featureState == 'loading' ? (
-            <Box padding={2}>
-              <Spinner />
-            </Box>
-          ) : null}
-          {featureState == 'enabled' ? <Indexes /> : null}
-        </Card>
+        {featureState === 'loading' ? (
+          <Box padding={6}>
+            <Spinner size={4} />
+          </Box>
+        ) : null}
+
+        {featureState === 'enabled' ? (
+          <Card flex={1} style={{maxWidth: 1200}} padding={5}>
+            <Indexes />
+          </Card>
+        ) : null}
       </Flex>
     </Card>
   )

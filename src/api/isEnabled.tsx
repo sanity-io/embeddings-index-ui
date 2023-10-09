@@ -3,7 +3,7 @@ import {createContext, PropsWithChildren, useContext, useEffect, useState} from 
 import {Card, Text} from '@sanity/ui'
 import {useApiClient} from './embeddingsApiHooks'
 
-export type FeatureStatus = 'enabled' | 'disabled' | 'loading'
+export type FeatureStatus = 'enabled' | 'disabled' | 'loading' | 'error'
 export const FeatureEnabledContext = createContext<FeatureStatus>('loading')
 
 export function useIsFeatureEnabled() {
@@ -21,7 +21,7 @@ export function useIsFeatureEnabled() {
       })
       .catch((err) => {
         console.error(err)
-        setStatus('disabled')
+        setStatus('error')
       })
   }, [client])
 
@@ -51,6 +51,14 @@ export function FeatureDisabledNotice(props: {urlSuffix?: string}) {
           Upgrade now →
         </a>
       </Text>
+    </Card>
+  )
+}
+
+export function FeatureError() {
+  return (
+    <Card padding={4} border tone="critical">
+      An error occurred. See console for details.
     </Card>
   )
 }

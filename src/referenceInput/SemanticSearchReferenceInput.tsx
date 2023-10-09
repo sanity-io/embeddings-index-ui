@@ -12,7 +12,7 @@ import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {useDocumentPane} from 'sanity/desk'
 import {QueryResult} from '../api/embeddingsApi'
 import {publicId} from '../utils/id'
-import {FeatureDisabledNotice, useIsFeatureEnabledContext} from '../api/isEnabled'
+import {FeatureDisabledNotice, FeatureError, useIsFeatureEnabledContext} from '../api/isEnabled'
 import {EmbeddingsIndexConfig} from '../schemas/typeDefExtensions'
 import {SemanticSearchAutocomplete} from './SemanticSearchAutocomplete'
 
@@ -69,6 +69,12 @@ export function SemanticSearchReferenceInput(
 
       {semantic && featureState == 'disabled' ? (
         <FeatureDisabledNotice urlSuffix="?ref=embeddings-ref" />
+      ) : null}
+
+      {semantic && featureState === 'error' ? (
+        <Box padding={4}>
+          <FeatureError />
+        </Box>
       ) : null}
 
       <Box flex={1} style={{maxHeight: 36, overflow: 'hidden'}}>
