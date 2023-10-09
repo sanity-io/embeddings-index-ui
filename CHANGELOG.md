@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.7](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.6...v1.1.7) (2023-10-09)
+
+### Bug Fixes
+
+- display an error dialog if feature check fails ([ab79710](https://github.com/sanity-io/embeddings-index-ui/commit/ab797104079f05d7ad97a18a70ebba128560f2f2))
+
 ## [1.1.6](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.5...v1.1.6) (2023-10-05)
 
 ### Bug Fixes
