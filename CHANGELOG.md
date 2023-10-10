@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.8](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.7...v1.1.8) (2023-10-10)
+
+### Bug Fixes
+
+- next esm build error ([eb4d5f2](https://github.com/sanity-io/embeddings-index-ui/commit/eb4d5f272ecadf4b271d58b89ee34145f789316b))
+
 ## [1.1.7](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.6...v1.1.7) (2023-10-09)
 
 ### Bug Fixes
