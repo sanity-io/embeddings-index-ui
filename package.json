@@ -51,9 +51,9 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@sanity/icons": "^2.4.1",
-    "@sanity/incompatible-plugin": "^1.0.4",
-    "@sanity/ui": "^2.0.0"
+    "@sanity/icons": "^3.5.3",
+    "@sanity/incompatible-plugin": "^1.0.5",
+    "@sanity/ui": "^2.10.11"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.7.1",
@@ -81,11 +81,11 @@
     "rimraf": "^5.0.1",
     "sanity": "^3.16.1",
     "semantic-release": "^21.1.1",
-    "styled-components": "^5.3.11",
+    "styled-components": "^6.1",
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
-    "react": "^18",
+    "react": "^18 || ^19",
     "sanity": "^3.14"
   },
   "engines": {
