@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/sanity-io/embeddings-index-ui/compare/v2.0.0...v2.0.1) (2024-12-18)
+
+### Bug Fixes
+
+- flag as react 19 compatible ([#15](https://github.com/sanity-io/embeddings-index-ui/issues/15)) ([e0a5895](https://github.com/sanity-io/embeddings-index-ui/commit/e0a5895e1cfac6cbc7a5aeb4fdcfbc11a4dc94de))
+
 ## [2.0.0](https://github.com/sanity-io/embeddings-index-ui/compare/v1.1.8...v2.0.0) (2024-11-28)
 
 ### ⚠ BREAKING CHANGES
