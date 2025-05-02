@@ -1,8 +1,9 @@
 import {definePlugin, isObjectInputProps, ObjectInputProps, ReferenceSchemaType} from 'sanity'
-import {SemanticSearchReferenceInput} from './SemanticSearchReferenceInput'
-import {isType} from '../utils/types'
+
 import {FeatureEnabledProvider} from '../api/isEnabled'
 import {EmbeddingsIndexConfig} from '../schemas/typeDefExtensions'
+import {isType} from '../utils/types'
+import {SemanticSearchReferenceInput} from './SemanticSearchReferenceInput'
 
 export const embeddingsIndexReferenceInput = definePlugin<EmbeddingsIndexConfig | void>(
   (defaultConfig) => {

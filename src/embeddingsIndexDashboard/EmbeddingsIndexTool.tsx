@@ -1,12 +1,13 @@
+import {AddIcon, UndoIcon} from '@sanity/icons'
 import {Box, Button, Card, Flex, Heading, Spinner, Stack} from '@sanity/ui'
 import {useCallback, useEffect, useState} from 'react'
-import {AddIcon, UndoIcon} from '@sanity/icons'
+
 import {deleteIndex, getIndexes, IndexState, NamedIndex} from '../api/embeddingsApi'
-import {EditIndexDialog} from './IndexEditor'
-import {IndexList} from './IndexList'
-import {IndexInfo} from './IndexInfo'
 import {useApiClient} from '../api/embeddingsApiHooks'
 import {FeatureDisabledNotice, FeatureError, useIsFeatureEnabled} from '../api/isEnabled'
+import {EditIndexDialog} from './IndexEditor'
+import {IndexInfo} from './IndexInfo'
+import {IndexList} from './IndexList'
 
 export function EmbeddingsIndexTool() {
   const featureState = useIsFeatureEnabled()

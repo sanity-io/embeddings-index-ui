@@ -1,8 +1,9 @@
-import {IndexState, NamedIndex} from '../api/embeddingsApi'
-import {useSchema} from 'sanity'
-import {FormEvent, useCallback, useEffect, useId, useRef, useState} from 'react'
-import {Box, Button, Card, Dialog, Spinner, Stack, Text} from '@sanity/ui'
 import {AddIcon} from '@sanity/icons'
+import {Box, Button, Card, Dialog, Spinner, Stack, Text} from '@sanity/ui'
+import {FormEvent, useCallback, useEffect, useId, useRef, useState} from 'react'
+import {useSchema} from 'sanity'
+
+import {IndexState, NamedIndex} from '../api/embeddingsApi'
 import {useApiClient} from '../api/embeddingsApiHooks'
 import {useDefaultIndex} from './hooks'
 import {IndexFormInput} from './IndexFormInput'
@@ -107,6 +108,7 @@ export function IndexEditor(props: {
             onSubmit(response.index)
           }
         })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .catch((err: any) => {
           console.error(err)
           setErrors([err.message])

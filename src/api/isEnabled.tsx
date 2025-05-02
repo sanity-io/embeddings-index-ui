@@ -1,6 +1,7 @@
-import {useProjectId} from 'sanity'
-import {createContext, PropsWithChildren, useContext, useEffect, useState} from 'react'
 import {Card, Text} from '@sanity/ui'
+import {createContext, PropsWithChildren, useContext, useEffect, useState} from 'react'
+import {useProjectId} from 'sanity'
+
 import {useApiClient} from './embeddingsApiHooks'
 
 export type FeatureStatus = 'enabled' | 'disabled' | 'loading' | 'error'
@@ -28,7 +29,7 @@ export function useIsFeatureEnabled() {
   return status
 }
 
-export function FeatureEnabledProvider(props: PropsWithChildren<{}>) {
+export function FeatureEnabledProvider(props: PropsWithChildren) {
   const status = useIsFeatureEnabled()
   return (
     <FeatureEnabledContext.Provider value={status}>{props.children}</FeatureEnabledContext.Provider>

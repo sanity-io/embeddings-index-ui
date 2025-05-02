@@ -1,5 +1,6 @@
-import {ObjectSchemaType, Schema} from 'sanity'
 import {useMemo} from 'react'
+import {ObjectSchemaType, Schema} from 'sanity'
+
 import {isType} from '../utils/types'
 
 const defaultProjection = '{...}'

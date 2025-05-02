@@ -1,6 +1,5 @@
 /* eslint-disable max-nested-callbacks */
 import {Autocomplete, AutocompleteOpenButtonProps, Box, Button, Flex, Text} from '@sanity/ui'
-import {DocumentPreview} from '../preview/DocumentPreview'
 import {
   FocusEventHandler,
   forwardRef,
@@ -11,10 +10,12 @@ import {
   useRef,
   useState,
 } from 'react'
-import {EmbeddingsIndexConfig} from '../schemas/typeDefExtensions'
-import {queryIndex, QueryResult} from '../api/embeddingsApi'
 import {typed} from 'sanity'
+
+import {queryIndex, QueryResult} from '../api/embeddingsApi'
 import {useApiClient} from '../api/embeddingsApiHooks'
+import {DocumentPreview} from '../preview/DocumentPreview'
+import {EmbeddingsIndexConfig} from '../schemas/typeDefExtensions'
 
 export interface SemanticSearchAutocompleteProps {
   indexConfig: EmbeddingsIndexConfig
@@ -43,6 +44,7 @@ const NO_FILTER = () => true
 
 export const SemanticSearchAutocomplete = forwardRef(function SemanticSearchAutocomplete(
   props: SemanticSearchAutocompleteProps,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ref: any,
 ) {
   const {
@@ -78,7 +80,7 @@ export const SemanticSearchAutocomplete = forwardRef(function SemanticSearchAuto
 
       queryIndex(
         {
-          query: queryString.trim().length ? queryString : getEmptySearchValue() ?? '',
+          query: queryString.trim().length ? queryString : (getEmptySearchValue() ?? ''),
           indexName,
           maxResults,
           filter: {
@@ -90,6 +92,7 @@ export const SemanticSearchAutocomplete = forwardRef(function SemanticSearchAuto
         .then((result: QueryResult[]) => {
           if (queryRef.current === queryString) {
             setSearching(false)
+            setOptions([])
             setOptions([])
             const resultOptions = result
               .filter((hit) => (filterResult ? filterResult(hit) : true))

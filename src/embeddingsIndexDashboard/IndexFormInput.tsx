@@ -1,6 +1,7 @@
-import {NamedIndex} from '../api/embeddingsApi'
+import {Box, Label, Stack, Text, TextArea, TextInput} from '@sanity/ui'
 import {Dispatch, FormEvent, SetStateAction, useCallback, useId} from 'react'
-import {Box, Label, Stack, TextArea, TextInput, Text} from '@sanity/ui'
+
+import {NamedIndex} from '../api/embeddingsApi'
 
 export interface IndexFormInputProps {
   index: Partial<NamedIndex>

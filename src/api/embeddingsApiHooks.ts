@@ -1,5 +1,5 @@
-import {SanityClient, useClient} from 'sanity'
 import {useMemo} from 'react'
+import {SanityClient, useClient} from 'sanity'
 
 export function useApiClient(): SanityClient {
   const client = useClient({apiVersion: 'vX'})

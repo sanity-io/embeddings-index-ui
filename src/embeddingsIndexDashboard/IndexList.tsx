@@ -1,6 +1,7 @@
 import {Box, Button, Card, Flex, Label, Stack, Text} from '@sanity/ui'
-import {IndexState} from '../api/embeddingsApi'
 import {useCallback} from 'react'
+
+import {IndexState} from '../api/embeddingsApi'
 
 export interface IndexListProps {
   loading: boolean

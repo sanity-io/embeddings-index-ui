@@ -1,5 +1,6 @@
-import {definePlugin, Tool} from 'sanity'
 import {EarthGlobeIcon} from '@sanity/icons'
+import {definePlugin, Tool} from 'sanity'
+
 import {EmbeddingsIndexTool} from './EmbeddingsIndexTool'
 
 export const embeddingsIndexTool: Tool = {

@@ -1,3 +1,6 @@
+import {EarthGlobeIcon, LinkIcon} from '@sanity/icons'
+import {Box, Button, Flex, Spinner} from '@sanity/ui'
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {
   ObjectInputProps,
   ReferenceBaseOptions,
@@ -6,14 +9,12 @@ import {
   setIfMissing,
   unset,
 } from 'sanity'
-import {Box, Button, Flex, Spinner} from '@sanity/ui'
-import {EarthGlobeIcon, LinkIcon} from '@sanity/icons'
-import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {useDocumentPane} from 'sanity/desk'
+
 import {QueryResult} from '../api/embeddingsApi'
-import {publicId} from '../utils/id'
 import {FeatureDisabledNotice, FeatureError, useIsFeatureEnabledContext} from '../api/isEnabled'
 import {EmbeddingsIndexConfig} from '../schemas/typeDefExtensions'
+import {publicId} from '../utils/id'
 import {SemanticSearchAutocomplete} from './SemanticSearchAutocomplete'
 
 function useEmeddingsConfig(

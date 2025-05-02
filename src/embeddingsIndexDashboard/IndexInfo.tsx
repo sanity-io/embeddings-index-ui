@@ -1,3 +1,4 @@
+import {EllipsisVerticalIcon, TrashIcon} from '@sanity/icons'
 import {
   Box,
   Button,
@@ -10,11 +11,11 @@ import {
   Stack,
   Text,
 } from '@sanity/ui'
-import {EllipsisVerticalIcon, TrashIcon} from '@sanity/icons'
+import {useCallback} from 'react'
+
+import {IndexState} from '../api/embeddingsApi'
 import {IndexEditor} from './IndexEditor'
 import {QueryIndex} from './QueryIndex'
-import {IndexState} from '../api/embeddingsApi'
-import {useCallback} from 'react'
 
 export interface IndexInfoProps {
   selectedIndex: IndexState
