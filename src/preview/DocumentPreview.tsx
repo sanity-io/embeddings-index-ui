@@ -1,5 +1,7 @@
+import {ErrorOutlineIcon} from '@sanity/icons'
+import {Box, Button, ButtonProps, Card} from '@sanity/ui'
 import {CSSProperties, useMemo} from 'react'
-import {useMemoObservable} from 'react-rx'
+import {useObservable} from 'react-rx'
 import {
   DefaultPreview,
   getPreviewStateObservable,
@@ -11,8 +13,6 @@ import {
   useSchema,
 } from 'sanity'
 import {useIntentLink} from 'sanity/router'
-import {Box, Button, ButtonProps, Card} from '@sanity/ui'
-import {ErrorOutlineIcon} from '@sanity/icons'
 
 interface ResultPreviewProps {
   documentId: string
@@ -80,12 +80,20 @@ function DocumentPreviewInner({
 }: ResultPreviewProps & {schemaType: SchemaType} & ButtonProps) {
   const documentPreviewStore = useDocumentPreviewStore()
 
-  // NOTE: this emits sync so can never be null
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const {draft, published, isLoading} = useMemoObservable(
-    () => getPreviewStateObservable(documentPreviewStore, schemaType, documentId, ''),
+  const previewStateObservable = useMemo(
+    () => getPreviewStateObservable(documentPreviewStore, schemaType, documentId),
     [documentId, documentPreviewStore, schemaType],
-  )!
+  )
+
+  const {
+    snapshot,
+    original,
+    isLoading: previewIsLoading,
+  } = useObservable(previewStateObservable, {
+    snapshot: null,
+    isLoading: true,
+    original: null,
+  })
 
   const sanityDocument = useMemo(() => {
     return {
@@ -105,11 +113,11 @@ function DocumentPreviewInner({
   const preview = (
     <SanityDefaultPreview
       {...getPreviewValueWithFallback({
-        draft,
-        published,
-        value: sanityDocument,
+        snapshot,
+        original,
+        fallback: sanityDocument,
       })}
-      isPlaceholder={isLoading ?? true}
+      isPlaceholder={previewIsLoading ?? true}
       layout="default"
       icon={schemaType?.icon}
     />
