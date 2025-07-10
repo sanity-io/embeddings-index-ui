@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/sanity-io/embeddings-index-ui/compare/v2.1.0...v2.1.1) (2025-07-10)
+
+### Bug Fixes
+
+- **deps:** allow studio v4 in peer dep ranges + update main.yml ([#17](https://github.com/sanity-io/embeddings-index-ui/issues/17)) ([02b26f6](https://github.com/sanity-io/embeddings-index-ui/commit/02b26f602e2059926f1cda982aa608d0521ab848))
+
 ## [2.1.0](https://github.com/sanity-io/embeddings-index-ui/compare/v2.0.1...v2.1.0) (2025-05-02)
 
 ### Features
