@@ -5,6 +5,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/sanity-io/embeddings-index-ui/compare/v2.1.1...v3.0.0) (2025-07-31)
+
+### ⚠ BREAKING CHANGES
+
+- **deps:** update dependency @sanity/ui to v3 (#19)
+
+### Bug Fixes
+
+- **deps:** update dependency @sanity/ui to v3 ([#19](https://github.com/sanity-io/embeddings-index-ui/issues/19)) ([a8d62b2](https://github.com/sanity-io/embeddings-index-ui/commit/a8d62b264c1e6d4f82af89dade8decee3c0d68b4))
+
 ## [2.1.1](https://github.com/sanity-io/embeddings-index-ui/compare/v2.1.0...v2.1.1) (2025-07-10)
 
 ### Bug Fixes
